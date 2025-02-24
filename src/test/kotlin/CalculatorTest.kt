@@ -1,64 +1,66 @@
 import org.example.Calculator
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.api.assertThrows
+import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.MethodSource
 import java.lang.IllegalArgumentException
+import java.util.stream.Stream
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class CalculatorTest {
     private lateinit var calculator: Calculator
 
+    companion object{
+        @JvmStatic
+        fun edgeErrorCasesDivide(): Stream<Pair<Double, Double>> = Stream.of(
+            Pair(Double.POSITIVE_INFINITY, 2.0),
+            Pair(Double.NEGATIVE_INFINITY, 2.0)
+        )
+        @JvmStatic
+        fun edgeErrorCasesSum() : Stream<Pair<Double, Double>> = Stream.of(
+            Pair(Double.POSITIVE_INFINITY, 1.0),
+            Pair(Double.NEGATIVE_INFINITY, -1.0)
+        )
+        @JvmStatic
+        fun edgeErrorCasesMultiplySubtract() : Stream<Pair<Double, Double>> = Stream.of(
+            Pair(Double.POSITIVE_INFINITY, 1.0),
+            Pair(Double.NEGATIVE_INFINITY, 1.0)
+        )
+    }
+
     @BeforeEach
     fun setUp(){
         calculator = Calculator()
     }
 
-    @Test
-    fun testPositiveAddition(){
-        val res = calculator.add(10.0, 2.0);
-        assertEquals<Double>(12.0, res)
+    @ParameterizedTest
+    @CsvSource("10.0, 2.0, 8.0", "-10.0, -2.0, -8.0")
+    fun testSubtraction(a : Double, b : Double, expected: Double){
+        val res = calculator.subtract(a, b);
+        assertEquals<Double>(expected, res)
     }
 
-    @Test
-    fun testNegativeAddition(){
-        val res = calculator.add(-10.0, -2.0);
-        assertEquals<Double>(-12.0, res)
+    @ParameterizedTest
+    @CsvSource("10.0, 2.0, 12.0", "-10.0, -2.0, -12.0")
+    fun testAddition(a : Double, b: Double, expected : Double){
+        val res = calculator.add(a, b);
+        assertEquals<Double>(expected, res)
     }
 
-    @Test
-    fun testPositiveSubtraction(){
-        val res = calculator.subtract(10.0, 2.0);
-        assertEquals<Double>(8.0, res)
+    @ParameterizedTest
+    @CsvSource("10.0, 2.0, 20.0", "-10.0, -2.0, 20.0")
+    fun testMultiply(a : Double, b : Double, expected: Double){
+        val res = calculator.multiply(a, b);
+        assertEquals<Double>(expected, res)
     }
 
-    @Test
-    fun testNegativeSubtraction(){
-        val res = calculator.subtract(-10.0, -2.0);
-        assertEquals<Double>(-8.0, res)
-    }
-
-    @Test
-    fun testPositiveMultiply(){
-        val res = calculator.multiply(10.0, 2.0);
-        assertEquals<Double>(20.0, res)
-    }
-
-    @Test
-    fun testNegativeMultiply(){
-        val res = calculator.multiply(-10.0, -2.0);
-        assertEquals<Double>(20.0, res)
-    }
-
-    @Test
-    fun testPositiveDivision(){
-        val res = calculator.divide(10.0, 2.0);
-        assertEquals<Double>(5.0, res)
-    }
-
-    @Test
-    fun testNegativeDivision(){
-        val res = calculator.divide(-10.0, -2.0);
-        assertEquals<Double>(5.0, res)
+    @ParameterizedTest
+    @CsvSource("10.0, 2.0, 5.0", "-10.0, -2.0, 5.0")
+    fun testPositiveDivision(a : Double, b : Double, expected: Double){
+        val res = calculator.divide(a, b);
+        assertEquals<Double>(expected, res)
     }
 
     @Test
@@ -68,59 +70,38 @@ class CalculatorTest {
         }
     }
 
-    @Test
-    fun testSumPositiveEdgeError(){
+    @ParameterizedTest
+    @MethodSource("edgeErrorCasesSum")
+    fun testSumEdgeError(data : Pair<Double, Double>){
         assertThrows<IllegalArgumentException> {
-            calculator.add(Double.POSITIVE_INFINITY, 1.0)
+            val (a, b) = data
+            calculator.add(a, b)
+        }
+    }
+    @ParameterizedTest
+    @MethodSource("edgeErrorCasesMultiplySubtract")
+    fun testSubtractEdgeError(data : Pair<Double, Double>){
+        assertThrows<IllegalArgumentException> {
+            val (a, b) = data
+            calculator.subtract(a, b)
         }
     }
 
-    @Test
-    fun testSumNegativeEdgeError(){
+    @ParameterizedTest
+    @MethodSource("edgeErrorCasesMultiplySubtract")
+    fun testMultiplyEdgeError(data : Pair<Double, Double>){
         assertThrows<IllegalArgumentException> {
-            calculator.add(Double.NEGATIVE_INFINITY, -1.0)
+            val (a, b) = data
+            calculator.multiply(a, b)
         }
     }
 
-    @Test
-    fun testSubtractPositiveEdgeError(){
+    @ParameterizedTest
+    @MethodSource("edgeErrorCasesDivide")
+    fun testDivideEdgeError(data : Pair<Double, Double>){
         assertThrows<IllegalArgumentException> {
-            calculator.subtract(Double.POSITIVE_INFINITY, 1.0)
-        }
-    }
-
-    @Test
-    fun testSubtractNegativeEdgeError(){
-        assertThrows<IllegalArgumentException> {
-            calculator.subtract(Double.NEGATIVE_INFINITY, 1.0)
-        }
-    }
-
-    @Test
-    fun testMultiplyPositiveEdgeError(){
-        assertThrows<IllegalArgumentException> {
-            calculator.multiply(Double.POSITIVE_INFINITY, 1.0)
-        }
-    }
-
-    @Test
-    fun testMultiplyNegativeEdgeError(){
-        assertThrows<IllegalArgumentException> {
-            calculator.multiply(Double.NEGATIVE_INFINITY, 1.0)
-        }
-    }
-
-    @Test
-    fun testDividePositiveEdgeError(){
-        assertThrows<IllegalArgumentException> {
-            calculator.divide(Double.POSITIVE_INFINITY, 2.0)
-        }
-    }
-
-    @Test
-    fun testDivideNegativeEdgeError(){
-        assertThrows<IllegalArgumentException> {
-            calculator.divide(Double.NEGATIVE_INFINITY, 2.0)
+            val (a, b) = data
+            calculator.divide(a, b)
         }
     }
 
