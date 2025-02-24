@@ -2,7 +2,7 @@ package org.example
 
 class Calculator{
     private fun edgeRestriction(result : Double) : Boolean{
-        return result >= -Double.MAX_VALUE && result <= Double.MAX_VALUE
+        return result.isFinite()
     }
 
     private fun divideByZeroRestriction(divisor : Double) : Boolean{
