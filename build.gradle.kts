@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.9.0"
+    id("org.jetbrains.dokka") version "1.9.0"
 }
 
 group = "org.example"
@@ -13,6 +14,8 @@ dependencies {
     testImplementation(kotlin("test"))
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.10.0")
 }
+
+
 
 tasks.test {
     useJUnitPlatform()
