@@ -4,8 +4,8 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
-import java.lang.IllegalArgumentException
 import java.util.stream.Stream
+import kotlin.IllegalArgumentException
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -36,31 +36,43 @@ class CalculatorTest {
     }
 
     @ParameterizedTest
-    @CsvSource("10.0, 2.0, 8.0", "-10.0, -2.0, -8.0", "1e308, 1e307, 9.0e307")
+    @CsvSource(
+        "10.0, 2.0, 8.0", "-10.0, -2.0, -8.0", "1e308, 1e307, 9.0e307",
+        "-1e-308, 1e-308, -2e-308", "-1e-307, 1e-308, -1.1e-307"
+    )
     fun testSubtraction(a : Double, b : Double, expected: Double){
-        val res = calculator.subtract(a, b);
+        val res = calculator.subtract(a, b)
         assertEquals(expected, res, 1e300)
     }
 
     @ParameterizedTest
-    @CsvSource("10.0, 2.0, 12.0", "-10.0, -2.0, -12.0", "1e308, 1e307, 1.1e308")
+    @CsvSource(
+        "10.0, 2.0, 12.0", "-10.0, -2.0, -12.0", "1e308, 1e307, 1.1e308",
+        "1e-308, 1e-308, 2e-308", "1e-308, 1e-307, 1.1e-307"
+    )
     fun testAddition(a : Double, b: Double, expected : Double){
-        val res = calculator.add(a, b);
+        val res = calculator.add(a, b)
         assertEquals(expected, res, 1e300)
     }
 
     @ParameterizedTest
-    @CsvSource("10.0, 2.0, 20.0", "-10.0, -2.0, 20.0", "9e153, 1e154, 9e307")
+    @CsvSource(
+        "10.0, 2.0, 20.0", "-10.0, -2.0, 20.0", "9e153, 1e154, 9e307",
+        "1e-308, 1e-308, 1e-616", "-1e-154, 1e-154, -1e-308"
+        )
     fun testMultiply(a : Double, b : Double, expected: Double){
-        val res = calculator.multiply(a, b);
-        assertEquals<Double>(expected, res)
+        val res = calculator.multiply(a, b)
+        assertEquals(expected, res)
     }
 
     @ParameterizedTest
-    @CsvSource("10.0, 2.0, 5.0", "-10.0, -2.0, 5.0", "-1e308, 1e154, -1e154")
-    fun testPositiveDivision(a : Double, b : Double, expected: Double){
-        val res = calculator.divide(a, b);
-        assertEquals<Double>(expected, res)
+    @CsvSource(
+        "10.0, 2.0, 5.0", "-10.0, -2.0, 5.0", "-1e308, 1e154, -1e154",
+        "1e-308, 1e-308, 1.0", "-1e-308, 1e-308, -1.0"
+    )
+    fun testDivision(a : Double, b : Double, expected: Double){
+        val res = calculator.divide(a, b)
+        assertEquals(expected, res, 1e290)
     }
 
     @Test
@@ -102,6 +114,34 @@ class CalculatorTest {
         assertThrows<IllegalArgumentException> {
             val (a, b) = data
             calculator.divide(a, b)
+        }
+    }
+
+    @Test
+    fun testSumNaNError(){
+        assertThrows<IllegalArgumentException> {
+            calculator.add(Double.NaN, 1.0)
+        }
+    }
+
+    @Test
+    fun testSubtractNaNError(){
+        assertThrows<IllegalArgumentException> {
+            calculator.subtract(Double.NaN, 1.0)
+        }
+    }
+
+    @Test
+    fun testMultiplyNaNError(){
+        assertThrows<IllegalArgumentException> {
+            calculator.multiply(Double.NaN, 1.0)
+        }
+    }
+
+    @Test
+    fun testDivideNaNError(){
+        assertThrows<IllegalArgumentException> {
+            calculator.divide(Double.NaN, 1.0)
         }
     }
 
