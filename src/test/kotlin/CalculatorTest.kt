@@ -9,18 +9,18 @@ import kotlin.IllegalArgumentException
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-/*
+/**
 * CalculatorTest performs actions that test Calculator's capabilities of basic mathematical operations
 * */
 class CalculatorTest {
-    /*
+    /**
     * Instance of Calculator used by this test suite
     *
     *  */
     private lateinit var calculator: Calculator
 
     companion object{
-        /*
+        /**
         * Contains Divide test cases
         * */
         @JvmStatic
@@ -28,7 +28,7 @@ class CalculatorTest {
             Pair(Double.POSITIVE_INFINITY, 2.0),
             Pair(Double.NEGATIVE_INFINITY, 2.0)
         )
-        /*
+        /**
         * Contains addition test cases
         * */
         @JvmStatic
@@ -37,7 +37,7 @@ class CalculatorTest {
             Pair(-1e308, -1e308)
         )
 
-        /*
+        /**
         * Contains Multiply test cases
         * */
         @JvmStatic
@@ -47,7 +47,7 @@ class CalculatorTest {
         )
     }
 
-    /*
+    /**
     * Initialize an instance of Calculator
     * */
     @BeforeEach
@@ -55,7 +55,7 @@ class CalculatorTest {
         calculator = Calculator()
     }
 
-    /*
+    /**
     * Performs 5 test cases:
     * - 1: Positive subtract
     * - 2: Negative subtract
@@ -73,7 +73,7 @@ class CalculatorTest {
         assertEquals(expected, res, 1e300)
     }
 
-    /*
+    /**
     * Performs 5 test cases:
     * - 1: Positive addition
     * - 2: Negative addition
@@ -91,7 +91,7 @@ class CalculatorTest {
         assertEquals(expected, res, 1e300)
     }
 
-    /*
+    /**
     * Performs 5 test cases:
     * - 1: Positive product
     * - 2: Negative product
@@ -109,7 +109,7 @@ class CalculatorTest {
         assertEquals(expected, res)
     }
 
-    /*
+    /**
     * Performs 5 test cases:
     * - 1: Positive quotie
     * - 2: Negative quotie
@@ -127,7 +127,7 @@ class CalculatorTest {
         assertEquals(expected, res, 1e290)
     }
 
-    /*
+    /**
     * Evaluates DivideByZeroException
     * */
     @Test
@@ -138,7 +138,7 @@ class CalculatorTest {
         assertEquals(Calculator.exceptionMessagesDictionary["DivideByZero"], exception.message)
     }
 
-    /*
+    /**
     * Evaluates Infinite Addition result
     * */
     @ParameterizedTest
@@ -150,7 +150,7 @@ class CalculatorTest {
         }
         assertEquals(Calculator.exceptionMessagesDictionary["SumInfinite"], exception.message)
     }
-    /*
+    /**
     * Evaluates Infinite subtract result
     * */
     @ParameterizedTest
@@ -164,7 +164,7 @@ class CalculatorTest {
         assertEquals(Calculator.exceptionMessagesDictionary["SubtractInfinite"], exception.message)
     }
 
-    /*
+    /**
     * Evaluates Infinite product
     * */
     @ParameterizedTest
@@ -177,7 +177,7 @@ class CalculatorTest {
         assertEquals(Calculator.exceptionMessagesDictionary["MultiplyInfinite"], exception.message)
     }
 
-    /*
+    /**
     * Evaluates Infinite quotie result
     * */
     @ParameterizedTest
@@ -191,7 +191,7 @@ class CalculatorTest {
         assertEquals(Calculator.exceptionMessagesDictionary["DivideInfinite"], exception.message)
     }
 
-    /*
+    /**
     * Evaluates Infinite NaN addition
     * */
     @Test
@@ -202,7 +202,7 @@ class CalculatorTest {
         assertEquals(Calculator.exceptionMessagesDictionary["NaNArgument"], exception.message)
     }
 
-    /*
+    /**
     * Evaluates Infinite NaN subtract
     * */
     @Test
@@ -214,7 +214,7 @@ class CalculatorTest {
         assertEquals(Calculator.exceptionMessagesDictionary["NaNArgument"], exception.message)
     }
 
-    /*
+    /**
     * Evaluates Infinite NaN product
     * */
     @Test
@@ -226,7 +226,7 @@ class CalculatorTest {
         assertEquals(Calculator.exceptionMessagesDictionary["NaNArgument"], exception.message)
     }
 
-    /*
+    /**
     * Evaluates Infinite NaN quotie
     * */
     @Test

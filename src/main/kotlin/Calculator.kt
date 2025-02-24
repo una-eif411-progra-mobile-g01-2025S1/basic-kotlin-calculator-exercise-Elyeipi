@@ -1,6 +1,6 @@
 package org.example
 
-/*
+/**
 *
 * Calculator performs basic mathematical operations with 2 numbers of  type Double.
 *
@@ -10,7 +10,7 @@ class Calculator{
 
     companion object{
 
-        /*
+        /**
         *
         * A Dictionary which contains every exception message used in this Calculator.
         *
@@ -29,7 +29,7 @@ class Calculator{
         )
 
 
-        /*
+        /**
         * Verifies if result is Finite
         * @param The result of the operation
         * @return A Boolean that verifies if the result is finite. Returns false if it is infinite
@@ -38,7 +38,7 @@ class Calculator{
             return result.isFinite()
         }
 
-        /*
+        /**
         * Verifies if arguments are Not A Number (NaN)
         * @param First operand
         * @param Second operand
@@ -48,7 +48,7 @@ class Calculator{
             return !a.isNaN() && !b.isNaN()
         }
 
-        /*
+        /**
         * Verifies if divisor is not zero
         * @param Divisor
         * @return A Boolean that verifies if divisor is not zero. Returns false if divisor is zero
@@ -58,7 +58,7 @@ class Calculator{
         }
     }
 
-    /*
+    /**
     * Adds two numbers
     * @param First number to add
     * @param Second number to add
@@ -71,7 +71,7 @@ class Calculator{
         return a + b
     }
 
-    /*
+    /**
     * Subtract two numbers
     * @param First number to subtract
     * @param Second number to subtract
@@ -84,7 +84,7 @@ class Calculator{
         return a - b;
     }
 
-    /*
+    /**
     * multiply two numbers
     * @param First number to multiply
     * @param Second number to multiply
@@ -97,7 +97,7 @@ class Calculator{
         return a * b;
     }
 
-    /*
+    /**
     * Divide two numbers
     * @param Dividend
     * @param Divisor
