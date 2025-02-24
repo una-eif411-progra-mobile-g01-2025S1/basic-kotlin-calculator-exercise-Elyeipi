@@ -20,16 +20,26 @@ class CalculatorTest {
     private lateinit var calculator: Calculator
 
     companion object{
+        /*
+        * Contains Divide test cases
+        * */
         @JvmStatic
         fun edgeErrorCasesDivide(): Stream<Pair<Double, Double>> = Stream.of(
             Pair(Double.POSITIVE_INFINITY, 2.0),
             Pair(Double.NEGATIVE_INFINITY, 2.0)
         )
+        /*
+        * Contains addition test cases
+        * */
         @JvmStatic
         fun edgeErrorCasesSum() : Stream<Pair<Double, Double>> = Stream.of(
             Pair(1e308, 1e308),
             Pair(-1e308, -1e308)
         )
+
+        /*
+        * Contains Multiply test cases
+        * */
         @JvmStatic
         fun edgeErrorCasesMultiplySubtract() : Stream<Pair<Double, Double>> = Stream.of(
             Pair(Double.POSITIVE_INFINITY, 1.0),
