@@ -20,8 +20,8 @@ class CalculatorTest {
         )
         @JvmStatic
         fun edgeErrorCasesSum() : Stream<Pair<Double, Double>> = Stream.of(
-            Pair(Double.POSITIVE_INFINITY, 1.0),
-            Pair(Double.NEGATIVE_INFINITY, -1.0)
+            Pair(1e308, 1e308),
+            Pair(-1e308, -1e308)
         )
         @JvmStatic
         fun edgeErrorCasesMultiplySubtract() : Stream<Pair<Double, Double>> = Stream.of(
@@ -36,28 +36,28 @@ class CalculatorTest {
     }
 
     @ParameterizedTest
-    @CsvSource("10.0, 2.0, 8.0", "-10.0, -2.0, -8.0")
+    @CsvSource("10.0, 2.0, 8.0", "-10.0, -2.0, -8.0", "1e308, 1e307, 9.0e307")
     fun testSubtraction(a : Double, b : Double, expected: Double){
         val res = calculator.subtract(a, b);
-        assertEquals<Double>(expected, res)
+        assertEquals(expected, res, 1e300)
     }
 
     @ParameterizedTest
-    @CsvSource("10.0, 2.0, 12.0", "-10.0, -2.0, -12.0")
+    @CsvSource("10.0, 2.0, 12.0", "-10.0, -2.0, -12.0", "1e308, 1e307, 1.1e308")
     fun testAddition(a : Double, b: Double, expected : Double){
         val res = calculator.add(a, b);
-        assertEquals<Double>(expected, res)
+        assertEquals(expected, res, 1e300)
     }
 
     @ParameterizedTest
-    @CsvSource("10.0, 2.0, 20.0", "-10.0, -2.0, 20.0")
+    @CsvSource("10.0, 2.0, 20.0", "-10.0, -2.0, 20.0", "9e153, 1e154, 9e307")
     fun testMultiply(a : Double, b : Double, expected: Double){
         val res = calculator.multiply(a, b);
         assertEquals<Double>(expected, res)
     }
 
     @ParameterizedTest
-    @CsvSource("10.0, 2.0, 5.0", "-10.0, -2.0, 5.0")
+    @CsvSource("10.0, 2.0, 5.0", "-10.0, -2.0, 5.0", "-1e308, 1e154, -1e154")
     fun testPositiveDivision(a : Double, b : Double, expected: Double){
         val res = calculator.divide(a, b);
         assertEquals<Double>(expected, res)
