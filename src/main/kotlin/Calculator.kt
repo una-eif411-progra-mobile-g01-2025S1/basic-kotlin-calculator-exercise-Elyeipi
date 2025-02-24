@@ -1,5 +1,3 @@
-package org.example
-
 /**
 *
 * Calculator performs basic mathematical operations with 2 numbers of  type Double.
@@ -66,7 +64,7 @@ class Calculator{
     * @throws IllegalArgument if any of the numbers is NaN or the addition tends to Infinite
     * */
     fun add(a : Double, b : Double) : Double{
-        require(isNotANaN(a, b)){exceptionMessagesDictionary["NaNArgument"] ?: "IllegalArgument"}
+        require(isNotANaN(a, b)){ exceptionMessagesDictionary["NaNArgument"] ?: "IllegalArgument"}
         require(edgeRestriction(a + b)){ exceptionMessagesDictionary["SumInfinite"] ?: "IllegalArgument"}
         return a + b
     }
@@ -79,7 +77,7 @@ class Calculator{
     * @throws IllegalArgument if any of the numbers is NaN or subtract tends to Infinite
     * */
     fun subtract(a : Double, b : Double) : Double{
-        require(isNotANaN(a, b)){exceptionMessagesDictionary["NaNArgument"] ?: "IllegalArgument"}
+        require(isNotANaN(a, b)){ exceptionMessagesDictionary["NaNArgument"] ?: "IllegalArgument"}
         require(edgeRestriction(a - b)){ exceptionMessagesDictionary["SubtractInfinite"] ?: "IllegalArgument"}
         return a - b;
     }
@@ -92,7 +90,7 @@ class Calculator{
     * @throws IllegalArgument if any of the numbers is NaN or the product tends to Infinite
     * */
     fun multiply(a : Double, b : Double) : Double{
-        require(isNotANaN(a, b)){exceptionMessagesDictionary["NaNArgument"] ?: "IllegalArgument"}
+        require(isNotANaN(a, b)){ exceptionMessagesDictionary["NaNArgument"] ?: "IllegalArgument"}
         require(edgeRestriction(a * b)){ exceptionMessagesDictionary["MultiplyInfinite"] ?: "IllegalArgument"}
         return a * b;
     }
@@ -105,9 +103,9 @@ class Calculator{
     * @throws IllegalArgument if any of the numbers is NaN, divisor is zero or the quotie tends to Infinite
     * */
     fun divide(a : Double, b : Double) : Double{
-        require(isNotANaN(a, b)){exceptionMessagesDictionary["NaNArgument"] ?: "IllegalArgument"}
+        require(isNotANaN(a, b)){ exceptionMessagesDictionary["NaNArgument"] ?: "IllegalArgument"}
         require(divideByZeroRestriction(b)) { exceptionMessagesDictionary["DivideByZero"] ?: "IllegalArgument" }
-        require(edgeRestriction(a / b)){exceptionMessagesDictionary["DivideInfinite"] ?: "IllegalArgument"}
+        require(edgeRestriction(a / b)){ exceptionMessagesDictionary["DivideInfinite"] ?: "IllegalArgument"}
         return a / b
     }
 }

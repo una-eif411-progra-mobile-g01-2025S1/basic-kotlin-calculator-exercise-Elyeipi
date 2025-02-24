@@ -1,4 +1,6 @@
-import org.example.Calculator
+package org.example
+
+import Calculator
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.api.assertThrows
@@ -17,8 +19,10 @@ class CalculatorTest {
     * Instance of Calculator used by this test suite
     *
     *  */
-    private lateinit var calculator: Calculator
-
+    lateinit var calculator: Calculator
+    /**
+     * Provides every test case for Parametereized cases
+     */
     companion object{
         /**
         * Contains Divide test cases
@@ -62,7 +66,10 @@ class CalculatorTest {
     * - 3: Long subtract
     * - 4: First Small subtract
     * - 5: Second Small subtract
-    *  */
+     * @param a The first number.
+     * @param b The second number.
+     * @param expected The expected result.
+     */
     @ParameterizedTest
     @CsvSource(
         "10.0, 2.0, 8.0", "-10.0, -2.0, -8.0", "1e308, 1e307, 9.0e307",
@@ -80,7 +87,10 @@ class CalculatorTest {
     * - 3: Long addition
     * - 4: First Small addition
     * - 5: Second Small addition
-    *  */
+     * @param a The first number.
+     * @param b The second number.
+     * @param expected The expected result.
+     */
     @ParameterizedTest
     @CsvSource(
         "10.0, 2.0, 12.0", "-10.0, -2.0, -12.0", "1e308, 1e307, 1.1e308",
@@ -98,7 +108,10 @@ class CalculatorTest {
     * - 3: Long product
     * - 4: First Small product
     * - 5: Second Small product
-    *  */
+     * @param a The first number.
+     * @param b The second number.
+     * @param expected The expected result.
+     */
     @ParameterizedTest
     @CsvSource(
         "10.0, 2.0, 20.0", "-10.0, -2.0, 20.0", "9e153, 1e154, 9e307",
@@ -116,7 +129,10 @@ class CalculatorTest {
     * - 3: Long quotie
     * - 4: First Small quotie
     * - 5: Second Small quotie
-    *  */
+     * @param a The first number.
+     * @param b The second number.
+     * @param expected The expected result.
+     */
     @ParameterizedTest
     @CsvSource(
         "10.0, 2.0, 5.0", "-10.0, -2.0, 5.0", "-1e308, 1e154, -1e154",
@@ -129,7 +145,8 @@ class CalculatorTest {
 
     /**
     * Evaluates DivideByZeroException
-    * */
+     * @throws IllegalArgumentException if division by zero occurs.
+     */
     @Test
     fun testDivideByZeroError(){
         val exception = assertThrows<IllegalArgumentException> {
@@ -140,6 +157,7 @@ class CalculatorTest {
 
     /**
     * Evaluates Infinite Addition result
+     * @param data contains specific test case data
     * */
     @ParameterizedTest
     @MethodSource("edgeErrorCasesSum")
@@ -152,7 +170,8 @@ class CalculatorTest {
     }
     /**
     * Evaluates Infinite subtract result
-    * */
+     * @param data contains specific test case data
+     * */
     @ParameterizedTest
     @MethodSource("edgeErrorCasesMultiplySubtract")
     fun testSubtractEdgeError(data : Pair<Double, Double>){
@@ -166,7 +185,8 @@ class CalculatorTest {
 
     /**
     * Evaluates Infinite product
-    * */
+    * * @param data contains specific test case data
+     * */
     @ParameterizedTest
     @MethodSource("edgeErrorCasesMultiplySubtract")
     fun testMultiplyEdgeError(data : Pair<Double, Double>){
@@ -179,7 +199,9 @@ class CalculatorTest {
 
     /**
     * Evaluates Infinite quotie result
-    * */
+    *
+     * * @param data contains specific test case data
+     * */
     @ParameterizedTest
     @MethodSource("edgeErrorCasesDivide")
     fun testDivideEdgeError(data : Pair<Double, Double>){
@@ -193,7 +215,7 @@ class CalculatorTest {
 
     /**
     * Evaluates Infinite NaN addition
-    * */
+     * */
     @Test
     fun testSumNaNError(){
         val exception = assertThrows<IllegalArgumentException> {
@@ -204,7 +226,7 @@ class CalculatorTest {
 
     /**
     * Evaluates Infinite NaN subtract
-    * */
+     * */
     @Test
     fun testSubtractNaNError(){
         val exception = assertThrows<IllegalArgumentException> {

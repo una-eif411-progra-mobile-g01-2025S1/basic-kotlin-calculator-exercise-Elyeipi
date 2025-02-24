@@ -1,5 +1,3 @@
-package org.example
-
 /**
 * Performs a quick example of Calculator main uses and shows its results.
 * */
